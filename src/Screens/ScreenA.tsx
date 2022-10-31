@@ -1,10 +1,18 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Button, StyleSheet, Pressable, Text } from "react-native";
+import { BarCodeScanner } from 'expo-barcode-scanner';
+import QRCode from "../components/QrCode";
 
 import { useNavigation } from "@react-navigation/native";
 
 export function ScreenA() {
+  const [hasPermission, setHasPermission] = useState(null);
+  const [scanned, setScanned] = useState(false);
+
+  
+  
+  
   const navigation = useNavigation();
   function openScreenA() {
     navigation.navigate("screenA");
@@ -13,8 +21,17 @@ export function ScreenA() {
     navigation.navigate("screenB");
   }
 
+
+
+
+
+
   return (
     <View style={styles.container}>
+      <View>
+        <QRCode navigation={undefined} />
+      </View>
+
       <View style={styles.nav}>
         <Pressable style={styles.buttonLeft} onPress={openScreenA}>
           <Text style={styles.text}>Ir para tela A</Text>

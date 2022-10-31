@@ -279,9 +279,9 @@ export function ScreenB() {
           <ScrollView horizontal={false} showsHorizontalScrollIndicator={false}>
             {parkingSpotsData.map((item: any) => {
               return (
-                <View style={styles.spotContainer}>
-                  <Text style={styles.spotTitle}>{item.spotRegion}</Text>
-                  <ScrollView horizontal={true}>
+                <View style={styles.spotContainer} key={item.id}>
+                  <Text key={item.id} style={styles.spotTitle}>{item.spotRegion}</Text>
+                  <ScrollView horizontal={true} key={item.id}>
                     <FlatList
                       data={item.spots}
                       renderItem={({ item }) => (
