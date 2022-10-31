@@ -9,8 +9,8 @@ const { Screen, Navigator } = createNativeStackNavigator();
 export function StackRoutes() {
   return (
     <Navigator>
-      <Screen name="screenA" component={ScreenA} />
-      <Screen name="screenB" component={ScreenB} />
+      <Screen name="Home" component={ScreenA} />
+      <Screen name="Vagas" component={ScreenB} />
       <Screen name="spotDetail" component={SpotDetail} />
       <Screen name="Scanner" component={Scanner} />
     </Navigator>

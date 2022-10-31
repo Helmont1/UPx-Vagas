@@ -15,10 +15,10 @@ export function ScreenA() {
   
   const navigation = useNavigation();
   function openScreenA() {
-    navigation.navigate("screenA");
+    navigation.navigate("Home");
   }
   function openScreenB() {
-    navigation.navigate("screenB");
+    navigation.navigate("Vagas");
   }
 
 
@@ -34,10 +34,10 @@ export function ScreenA() {
 
       <View style={styles.nav}>
         <Pressable style={styles.buttonLeft} onPress={openScreenA}>
-          <Text style={styles.text}>Ir para tela A</Text>
+          <Text style={styles.text}>Ir para home</Text>
         </Pressable>
         <Pressable style={styles.buttonRight} onPress={openScreenB}>
-          <Text style={styles.text}>Ir para tela B</Text>
+          <Text style={styles.text}>Ir para vagas</Text>
         </Pressable>
       </View>
     </View>

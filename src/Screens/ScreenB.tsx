@@ -256,10 +256,10 @@ const parkingSpotsData: any = [
 export function ScreenB() {
   const navigation = useNavigation();
   function openScreenA() {
-    navigation.navigate("screenA");
+    navigation.navigate("Home");
   }
   function openScreenB() {
-    navigation.navigate("screenB");
+    navigation.navigate("Vagas");
   }
   function openSpotDetails(spot: any) {
     navigation.navigate("spotDetail", { 
@@ -310,6 +310,7 @@ export function ScreenB() {
                       keyExtractor={(item) => item.id}
                       numColumns={5}
                       scrollEnabled={true}
+                          scrollToOverflowEnabled={true}
                     />
                   </ScrollView>
                 </View>
@@ -320,10 +321,10 @@ export function ScreenB() {
       </View>
       <View style={styles.nav}>
         <Pressable style={styles.buttonLeft} onPress={openScreenA}>
-          <Text style={styles.text}>Ir para tela A</Text>
+          <Text style={styles.text}>Ir para home</Text>
         </Pressable>
         <Pressable style={styles.buttonRight} onPress={openScreenB}>
-          <Text style={styles.text}>Ir para tela B</Text>
+          <Text style={styles.text}>Ir para vagas</Text>
         </Pressable>
       </View>
     </View>
@@ -449,7 +450,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   spotTextOccupied: {
-    color: "red",
+    color: 'purple',
     fontSize: 20,
     fontWeight: "bold",
   },
@@ -474,7 +475,8 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   spotOccupied: {
-    backgroundColor: "red",
+    backgroundColor: "purple",
+    color: "white",
     height: 140,
     width: 120,
     justifyContent: "center",
@@ -485,7 +487,8 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   spotName: {
-    color: "#929292",
+    //light purple
+    color: "#976d97",
     fontSize: 20,
     fontWeight: "bold",
   },

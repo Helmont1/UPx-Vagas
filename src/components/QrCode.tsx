@@ -14,9 +14,8 @@ const QRCode: React.FC = () => {
   };
 
   return <View style={styles.container}>
-    <QRcode value={JSON.stringify(payload)} size={300} />
     <View>
-        <Button title="Marcar vaga" onPress={() => navigation.navigate("Scanner")} />
+        <Button title="Escanear vaga" onPress={() => navigation.navigate("Scanner")} />
     </View>
   </View>;
 };
