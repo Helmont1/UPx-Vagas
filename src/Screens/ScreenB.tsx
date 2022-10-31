@@ -7,87 +7,253 @@ import {
   Pressable,
   Text,
   TouchableOpacity,
+  FlatList,
+  ScrollView,
+  Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import Svg, { Circle } from 'react-native-svg'
 
 type spots = [
-  id: String,
-  nameId: String,
-  occupied: Boolean,
-]
-
-const parkingSpotsA = [
   {
-    id: "a1",
-    nameId: "a101",
-    occupied: true,
-  },
-  {
-    id: "a1",
-    nameId: "a102",
-    occupied: false,
-  },
-  {
-    id: "a1",
-    nameId: "a103",
-    occupied: false,
-  },
-  {
-    id: "a1",
-    nameId: "a104",
-    occupied: true,
-  },
-  {
-    id: "a1",
-    nameId: "a103",
-    occupied: false,
-  },
-  {
-    id: "a1",
-    nameId: "a104",
-    occupied: true,
-  },
+    id: number;
+    spotRegion: string;
+    spotName: string;
+    spots: {
+      id: number;
+      spotName: string;
+      spotRegion: string;
+      spotType: string;
+      spotDescription: string;
+      spotImage: string | null;
+      spotLatitude: number | null;
+      spotLongitude: number | null;
+      spotAddress: string | null;
+      occupied: boolean;
+    }[];
+  }
 ];
-const parkingSpotsB = [
+
+const parkingSpotsData: any = [
   {
-    id: "b1",
-    nameId: "b101",
-    occupied: false,
+    id: 1,
+    spotRegion: "A",
+    spotName: "A1",
+    spots: [
+      {
+        id: 1,
+        spotName: "A1",
+        spotRegion: "A",
+        spotType: "Car",
+        spotDescription: "A1",
+        spotImage: null,
+        spotLatitude: 0,
+        spotLongitude: 0,
+        spotAddress: null,
+        occupied: true,
+      },
+      {
+        id: 2,
+        spotName: "A2",
+        spotRegion: "A",
+        spotType: "Car",
+        spotDescription: "A2",
+        spotImage: null,
+        spotLatitude: 0,
+        spotLongitude: 0,
+        spotAddress: null,
+        occupied: false,
+      },
+      {
+        id: 3,
+        spotName: "A3",
+        spotRegion: "A",
+        spotType: "Car",
+        spotDescription: "A3",
+        spotImage: null,
+        spotLatitude: 0,
+        spotLongitude: 0,
+        spotAddress: null,
+        occupied: false,
+      },
+      {
+        id: 4,
+        spotName: "A4",
+        spotRegion: "A",
+        spotType: "Car",
+        spotDescription: "A4",
+        spotImage: null,
+        spotLatitude: 0,
+        spotLongitude: 0,
+        spotAddress: null,
+        occupied: false,
+      },
+      {
+        id: 5,
+        spotName: "A5",
+        spotRegion: "A",
+        spotType: "Car",
+        spotDescription: "A5",
+        spotImage: null,
+        spotLatitude: 0,
+
+        spotLongitude: 0,
+        spotAddress: null,
+        occupied: false,
+      },
+    ],
   },
   {
-    id: "b1",
-    nameId: "b102",
-    occupied: true,
+    id: 2,
+    spotRegion: "B",
+    spotName: "B1",
+    spots: [
+      {
+        id: 6,
+        spotName: "B1",
+        spotRegion: "B",
+        spotType: "Car",
+        spotDescription: "B1",
+        spotImage: null,
+        spotLatitude: 0,
+        spotLongitude: 0,
+        spotAddress: null,
+        occupied: false,
+      },
+      {
+        id: 7,
+        spotName: "B2",
+        spotRegion: "B",
+        spotType: "Car",
+        spotDescription: "B2",
+        spotImage: null,
+        spotLatitude: 0,
+        spotLongitude: 0,
+        spotAddress: null,
+        occupied: false,
+      },
+      {
+        id: 8,
+        spotName: "B3",
+        spotRegion: "B",
+        spotType: "Car",
+        spotDescription: "B3",
+        spotImage: null,
+        spotLatitude: 0,
+        spotLongitude: 0,
+        spotAddress: null,
+        occupied: false,
+      },
+      //generate 100 spots
+      {
+        id: 9,
+        spotName: "B4",
+        spotRegion: "B",
+        spotType: "Car",
+        spotDescription: "B4",
+        spotImage: null,
+        spotLatitude: 0,
+        spotLongitude: 0,
+        spotAddress: null,
+        occupied: false,
+      },
+      {
+        id: 10,
+        spotName: "B5",
+        spotRegion: "B",
+        spotType: "Car",
+        spotDescription: "B5",
+        spotImage: null,
+        spotLatitude: 0,
+        spotLongitude: 0,
+        spotAddress: null,
+        occupied: false,
+      },
+    ],
   },
   {
-    id: "b1",
-    nameId: "b103",
-    occupied: false,
+    id: 3,
+    spotRegion: "C",
+    spotName: "C1",
+    spots: [
+      {
+        id: 11,
+        spotName: "C1",
+        spotRegion: "C",
+        spotType: "Car",
+        spotDescription: "C1",
+        spotImage: null,
+        spotLatitude: 0,
+        spotLongitude: 0,
+        spotAddress: null,
+        occupied: false,
+      },
+      {
+        id: 12,
+        spotName: "C2",
+        spotRegion: "C",
+        spotType: "Car",
+        spotDescription: "C2",
+        spotImage: null,
+        spotLatitude: 0,
+        spotLongitude: 0,
+        spotAddress: null,
+        occupied: false,
+      },
+    ],
   },
   {
-    id: "b1",
-    nameId: "b104",
-    occupied: true,
+    id: 4,
+    spotRegion: "D",
+    spotName: "D1",
+    spots: [
+      {
+        id: 13,
+        spotName: "D1",
+        spotRegion: "D",
+        spotType: "Car",
+        spotDescription: "D1",
+        spotImage: null,
+        spotLatitude: 0,
+        spotLongitude: 0,
+        spotAddress: null,
+        occupied: false,
+      },
+      {
+        id: 14,
+        spotName: "D2",
+        spotRegion: "D",
+        spotType: "Car",
+        spotDescription: "D2",
+        spotImage: null,
+        spotLatitude: 0,
+        spotLongitude: 0,
+        spotAddress: null,
+        occupied: false,
+      },
+    ],
   },
   {
-    id: "b1",
-    nameId: "b103",
-    occupied: false,
+    id: 5,
+    spotRegion: "E",
+    spotName: "E1",
+    spots: [
+      {
+        id: 15,
+        spotName: "E1",
+        spotRegion: "E",
+        spotType: "Car",
+        spotDescription: "E1",
+        spotImage: null,
+        spotLatitude: 0,
+        spotLongitude: 0,
+        spotAddress: null,
+        occupied: false,
+      },
+    ],
   },
-  {
-    id: "b1",
-    nameId: "b104",
-    occupied: true,
-  },
- 
 ];
 
 export function ScreenB() {
-  const [occupied, setOccupied] = useState(false);
-  const [dataA, setDataA] = useState();
-  const [dataB, setDataB] = useState();
-
   const navigation = useNavigation();
   function openScreenA() {
     navigation.navigate("screenA");
@@ -95,100 +261,58 @@ export function ScreenB() {
   function openScreenB() {
     navigation.navigate("screenB");
   }
+  function openSpotDetails(spot: any) {
+    navigation.navigate("spotDetail", { 
+      spotOccupied: spot.occupied,
+      spotName: spot.spotName,
+      spotRegion: spot.spotRegion,
+      spotType: spot.spotType,
+      spotDescription: spot.spotDescription,
+     });
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.parkingContainer}>
-        <Text style={styles.textTitle}>Escolha sua vaga</Text>
+        <Text style={styles.textTitle}>Vagas</Text>
         <View style={styles.spotsContainer}>
-          <View style={styles.esquerda}>
-            <Text>A1</Text>
-            {
-              parkingSpotsA.map((spots, index) => <View style={styles.spot}>
-              <TouchableOpacity key={index} style={spots.occupied? styles.spotOccupied : styles.spotFree}>
-                <Text>{spots.nameId}</Text>
-              </TouchableOpacity>
-            </View>)
-            }
-            {/* <View style={styles.spot}>
-              <TouchableOpacity style={styles.spotOccupied}>
-              <Svg height="50%" width="50%" viewBox="0 0 100 100" >
-                  <Circle cx="50" cy="50" r="50" stroke="purple" strokeWidth=".5" fill="violet" />
-              </Svg>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.spot}>
-              <TouchableOpacity style={styles.spotOccupied}>
-                <Text>Vaga1</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.spot}>
-              <TouchableOpacity style={styles.spotOccupied}>
-                <Text>Vaga1</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.spot}>
-              <TouchableOpacity style={styles.spotOccupied}>
-                <Text>Vaga1</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.spot}>
-              <TouchableOpacity style={styles.spotOccupied}>
-                <Text>Vaga1</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.spot}>
-              <TouchableOpacity style={styles.spotOccupied}>
-                <Text>Vaga1</Text>
-              </TouchableOpacity>
-            </View> */}
-          </View>
-          <View style={styles.direita}>
-            <Text>B1</Text>
-            {
-              parkingSpotsB.map((spots, index) => <View style={styles.spot}>
-              <TouchableOpacity key={index} style={spots.occupied? styles.spotOccupied : styles.spotFree}>
-                <Text>{spots.nameId}</Text>
-              </TouchableOpacity>
-            </View>)
-            }
-            {/* <View style={styles.spot}>
-              <TouchableOpacity style={styles.spotOccupied}>
-                <Text>Vaga1</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.spot}>
-              <TouchableOpacity style={styles.spotOccupied}>
-                <Text>Vaga1</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.spot}>
-              <TouchableOpacity style={styles.spotOccupied}>
-                <Text>Vaga1</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.spot}>
-              <TouchableOpacity style={styles.spotOccupied}>
-                <Text>Vaga1</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.spot}>
-              <TouchableOpacity style={styles.spotOccupied}>
-                <Text>Vaga1</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.spot}>
-              <TouchableOpacity style={styles.spotOccupied}>
-                <Text>Vaga1</Text>
-              </TouchableOpacity>
-            </View> */}
-          </View>
-          <View style={styles.chooseSpot}>
-            <TouchableOpacity>
-              <Text style={{ color: "white", fontWeight: "bold" }}>
-                Selecionar vaga
-              </Text>
-            </TouchableOpacity>
-          </View>
+          <ScrollView horizontal={false} showsHorizontalScrollIndicator={false}>
+            {parkingSpotsData.map((item: any) => {
+              return (
+                <View style={styles.spotContainer}>
+                  <Text style={styles.spotTitle}>{item.spotRegion}</Text>
+                  <ScrollView horizontal={true}>
+                    <FlatList
+                      data={item.spots}
+                      renderItem={({ item }) => (
+                        <View
+                          style={
+                            item.occupied
+                              ? styles.spotOccupied
+                              : styles.spotFree
+                          }
+                        >
+                          <Pressable
+                            onPress={() => openSpotDetails(item)}
+                            style={styles.spotButton}
+                          >
+                            <Image
+                              style={styles.spotImage}
+                              source={require("../media/car.png")}
+                            />
+                            <Text style={styles.spotName}>{item.spotName}</Text>
+                          </Pressable>
+                        </View>
+                      )}
+                      keyExtractor={(item) => item.id}
+                      numColumns={5}
+                      scrollEnabled={true}
+                    />
+                  </ScrollView>
+                </View>
+              );
+            })}
+          </ScrollView>
         </View>
       </View>
       <View style={styles.nav}>
@@ -264,26 +388,7 @@ const styles = StyleSheet.create({
     padding: 15,
     position: "relative",
   },
-  spot: {
-    margin: 10,
-    backgroundColor: "#ededed",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  spotOccupied: {
-    backgroundColor: "red",
-    height: 50,
-    width: 140,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  spotFree: {
-    backgroundColor: "green",
-    height: 50,
-    width: 140,
-    justifyContent: "center",
-    alignItems: "center",
-  },
+
   chooseSpot: {
     marginLeft: "auto",
     marginRight: "auto",
@@ -300,18 +405,85 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 80,
   },
-  esquerda: {
-    position: "absolute",
-    left: 40,
-    top: 20,
-    justifyContent: "center",
-    alignItems: "center",
+  spotContainer: {
+    width: "100%",
+    backgroundColor: "white",
+    borderRadius: 20,
+    marginBottom: 20,
+    padding: 10,
+    flex: 1,
+    flexGrow: 2,
   },
-  direita: {
-    position: "absolute",
-    right: 40,
-    top: 20,
+  spotTitle: {
+    color: "#929292",
+
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  spotContent: {
+    flex: 1,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+  },
+  spotButton: {
+    height: 50,
+    width: 140,
     justifyContent: "center",
     alignItems: "center",
+    borderRadius: 20,
+    marginBottom: 10,
+  },
+  spotButtonText: {
+    color: "#929292",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  spotText: {
+    color: "#929292",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  spotTextOccupied: {
+    color: "red",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  spotTextFree: {
+    color: "green",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  spotImage: {
+    height: 100,
+    width: 100,
+  },
+  spotFree: {
+    backgroundColor: "#ededed",
+    height: 140,
+    width: 120,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 20,
+    marginBottom: 10,
+    marginRight: 10,
+    padding: 20,
+  },
+  spotOccupied: {
+    backgroundColor: "red",
+    height: 140,
+    width: 120,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 20,
+    marginBottom: 10,
+    marginRight: 10,
+    padding: 20,
+  },
+  spotName: {
+    color: "#929292",
+    fontSize: 20,
+    fontWeight: "bold",
   },
 });
