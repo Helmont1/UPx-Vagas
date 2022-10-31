@@ -14,6 +14,13 @@ const Scanner: React.FunctionComponent<IStackScreenProps> = (props) => {
     React.useEffect(() => {
         requestCameraPermission();
     }, []);
+    //make a useeffect that make a post request to the server with the data from the qr code
+    React.useEffect(() => {
+        if (scanData) {
+            console.log(scanData);
+        }
+    }, [scanData]);
+    
 
 
     const requestCameraPermission = async () => {
@@ -56,7 +63,7 @@ const Scanner: React.FunctionComponent<IStackScreenProps> = (props) => {
                     console.log(data)
                     console.log(type)
                     let _data = JSON.parse(data);
-                    setScanData(_data)
+                    setScanData(_data) 
                 }
                 catch(error){
                     console.log(error)

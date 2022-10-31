@@ -279,13 +279,14 @@ export function ScreenB() {
           <ScrollView horizontal={false} showsHorizontalScrollIndicator={false}>
             {parkingSpotsData.map((item: any) => {
               return (
-                <View style={styles.spotContainer} key={item.id}>
-                  <Text key={item.id} style={styles.spotTitle}>{item.spotRegion}</Text>
-                  <ScrollView horizontal={true} key={item.id}>
+                <View style={styles.spotContainer}>
+                  <Text style={styles.spotTitle}>{item.spotRegion}</Text>
+                  <ScrollView horizontal={true}>
                     <FlatList
                       data={item.spots}
                       renderItem={({ item }) => (
                         <View
+                        key={Math.random()}
                           style={
                             item.occupied
                               ? styles.spotOccupied
@@ -293,14 +294,16 @@ export function ScreenB() {
                           }
                         >
                           <Pressable
+                          key={Math.random()}
                             onPress={() => openSpotDetails(item)}
                             style={styles.spotButton}
                           >
                             <Image
+                            key={Math.random()}
                               style={styles.spotImage}
                               source={require("../media/car.png")}
                             />
-                            <Text style={styles.spotName}>{item.spotName}</Text>
+                            <Text key={Math.random()} style={styles.spotName}>{item.spotName}</Text>
                           </Pressable>
                         </View>
                       )}

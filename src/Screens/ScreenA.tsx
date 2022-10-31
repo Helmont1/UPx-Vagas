@@ -29,7 +29,7 @@ export function ScreenA() {
   return (
     <View style={styles.container}>
       <View>
-        <QRCode navigation={undefined} />
+        <QRCode />
       </View>
 
       <View style={styles.nav}>
