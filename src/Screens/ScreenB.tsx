@@ -12,6 +12,7 @@ import {
   Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import uuid from "react-native-uuid";
 
 type spots = [
   {
@@ -262,13 +263,17 @@ export function ScreenB() {
     navigation.navigate("Vagas");
   }
   function openSpotDetails(spot: any) {
-    navigation.navigate("spotDetail", { 
+    navigation.navigate("spotDetail", {
       spotOccupied: spot.occupied,
       spotName: spot.spotName,
       spotRegion: spot.spotRegion,
       spotType: spot.spotType,
       spotDescription: spot.spotDescription,
-     });
+    });
+  }
+
+  function generateUniqueKey() {
+    return (Math.random().toString(36).substr(2, 9) + uuid.v4).toString();
   }
 
   return (
@@ -277,16 +282,21 @@ export function ScreenB() {
         <Text style={styles.textTitle}>Vagas</Text>
         <View style={styles.spotsContainer}>
           <ScrollView horizontal={false} showsHorizontalScrollIndicator={false}>
-            {parkingSpotsData.map((item: any) => {
+            {parkingSpotsData.map((item: any, index: any) => {
               return (
                 <View style={styles.spotContainer}>
-                  <Text style={styles.spotTitle}>{item.spotRegion}</Text>
-                  <ScrollView horizontal={true}>
+                  <Text key={generateUniqueKey()} style={styles.spotTitle}>
+                    {item.spotRegion}
+                  </Text>
+                  <ScrollView horizontal={true} key={index * Math.random()}>
                     <FlatList
+                      key={generateUniqueKey()}
                       data={item.spots}
+                      showsHorizontalScrollIndicator={true}
+                      showsVerticalScrollIndicator={false}
                       renderItem={({ item }) => (
                         <View
-                        key={Math.random()}
+                          key={generateUniqueKey()}
                           style={
                             item.occupied
                               ? styles.spotOccupied
@@ -294,28 +304,34 @@ export function ScreenB() {
                           }
                         >
                           <Pressable
-                          key={Math.random()}
+                            key={generateUniqueKey()}
                             onPress={() => openSpotDetails(item)}
                             style={styles.spotButton}
                           >
                             <Image
-                            key={Math.random()}
+                              key={generateUniqueKey()}
                               style={styles.spotImage}
                               source={require("../media/car.png")}
                             />
-                            <Text key={Math.random()} style={styles.spotName}>{item.spotName}</Text>
+                            <Text
+                              key={ generateUniqueKey()}
+                              style={styles.spotName}
+                            >
+                              {item.spotName}
+                            </Text>
                           </Pressable>
                         </View>
                       )}
-                      keyExtractor={(item) => item.id}
+                      keyExtractor={(item) =>  generateUniqueKey()}
                       numColumns={5}
                       scrollEnabled={true}
-                          scrollToOverflowEnabled={true}
+                      scrollToOverflowEnabled={true}
                     />
                   </ScrollView>
                 </View>
               );
             })}
+            
           </ScrollView>
         </View>
       </View>
@@ -450,7 +466,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   spotTextOccupied: {
-    color: 'purple',
+    color: "purple",
     fontSize: 20,
     fontWeight: "bold",
   },
