@@ -144,7 +144,6 @@ const parkingSpotsData: any = [
         spotAddress: null,
         occupied: false,
       },
-      //generate 100 spots
       {
         id: 9,
         spotName: "B4",
@@ -292,8 +291,7 @@ export function ScreenB() {
                     <FlatList
                       key={generateUniqueKey()}
                       data={item.spots}
-                      showsHorizontalScrollIndicator={true}
-                      showsVerticalScrollIndicator={false}
+                      showsHorizontalScrollIndicator={false}
                       renderItem={({ item }) => (
                         <View
                           key={generateUniqueKey()}
