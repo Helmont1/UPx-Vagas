@@ -13,243 +13,92 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import uuid from "react-native-uuid";
+import Navbottom from "../components/NavBottom";
 
-type spots = [
+const parkingSpots = [
   {
-    id: number;
-    spotRegion: string;
-    spotName: string;
-    spots: {
-      id: number;
-      spotName: string;
-      spotRegion: string;
-      spotType: string;
-      spotDescription: string;
-      spotImage: string | null;
-      spotLatitude: number | null;
-      spotLongitude: number | null;
-      spotAddress: string | null;
-      occupied: boolean;
-    }[];
-  }
-];
-
-const parkingSpotsData: any = [
-  {
-    id: 1,
-    spotRegion: "A",
-    spotName: "A1",
-    spots: [
-      {
-        id: 1,
-        spotName: "A1",
-        spotRegion: "A",
-        spotType: "Car",
-        spotDescription: "A1",
-        spotImage: null,
-        spotLatitude: 0,
-        spotLongitude: 0,
-        spotAddress: null,
-        occupied: true,
-      },
-      {
-        id: 2,
-        spotName: "A2",
-        spotRegion: "A",
-        spotType: "Car",
-        spotDescription: "A2",
-        spotImage: null,
-        spotLatitude: 0,
-        spotLongitude: 0,
-        spotAddress: null,
-        occupied: false,
-      },
-      {
-        id: 3,
-        spotName: "A3",
-        spotRegion: "A",
-        spotType: "Car",
-        spotDescription: "A3",
-        spotImage: null,
-        spotLatitude: 0,
-        spotLongitude: 0,
-        spotAddress: null,
-        occupied: false,
-      },
-      {
-        id: 4,
-        spotName: "A4",
-        spotRegion: "A",
-        spotType: "Car",
-        spotDescription: "A4",
-        spotImage: null,
-        spotLatitude: 0,
-        spotLongitude: 0,
-        spotAddress: null,
-        occupied: false,
-      },
-      {
-        id: 5,
-        spotName: "A5",
-        spotRegion: "A",
-        spotType: "Car",
-        spotDescription: "A5",
-        spotImage: null,
-        spotLatitude: 0,
-
-        spotLongitude: 0,
-        spotAddress: null,
-        occupied: false,
-      },
-    ],
+    spotId: uuid.v4(),
+    parkingRegion: "A",
+    parkingName: "A1",
+    parkingType: "Car",
+    parkingStatus: false,
   },
   {
-    id: 2,
-    spotRegion: "B",
-    spotName: "B1",
-    spots: [
-      {
-        id: 6,
-        spotName: "B1",
-        spotRegion: "B",
-        spotType: "Car",
-        spotDescription: "B1",
-        spotImage: null,
-        spotLatitude: 0,
-        spotLongitude: 0,
-        spotAddress: null,
-        occupied: false,
-      },
-      {
-        id: 7,
-        spotName: "B2",
-        spotRegion: "B",
-        spotType: "Car",
-        spotDescription: "B2",
-        spotImage: null,
-        spotLatitude: 0,
-        spotLongitude: 0,
-        spotAddress: null,
-        occupied: false,
-      },
-      {
-        id: 8,
-        spotName: "B3",
-        spotRegion: "B",
-        spotType: "Car",
-        spotDescription: "B3",
-        spotImage: null,
-        spotLatitude: 0,
-        spotLongitude: 0,
-        spotAddress: null,
-        occupied: false,
-      },
-      {
-        id: 9,
-        spotName: "B4",
-        spotRegion: "B",
-        spotType: "Car",
-        spotDescription: "B4",
-        spotImage: null,
-        spotLatitude: 0,
-        spotLongitude: 0,
-        spotAddress: null,
-        occupied: false,
-      },
-      {
-        id: 10,
-        spotName: "B5",
-        spotRegion: "B",
-        spotType: "Car",
-        spotDescription: "B5",
-        spotImage: null,
-        spotLatitude: 0,
-        spotLongitude: 0,
-        spotAddress: null,
-        occupied: false,
-      },
-    ],
+    spotId: uuid.v4(),
+    parkingRegion: "A",
+    parkingName: "A2",
+    parkingType: "Car",
+    parkingStatus: false,
   },
   {
-    id: 3,
-    spotRegion: "C",
-    spotName: "C1",
-    spots: [
-      {
-        id: 11,
-        spotName: "C1",
-        spotRegion: "C",
-        spotType: "Car",
-        spotDescription: "C1",
-        spotImage: null,
-        spotLatitude: 0,
-        spotLongitude: 0,
-        spotAddress: null,
-        occupied: false,
-      },
-      {
-        id: 12,
-        spotName: "C2",
-        spotRegion: "C",
-        spotType: "Car",
-        spotDescription: "C2",
-        spotImage: null,
-        spotLatitude: 0,
-        spotLongitude: 0,
-        spotAddress: null,
-        occupied: false,
-      },
-    ],
+    spotId: uuid.v4(),
+    parkingRegion: "B",
+    parkingName: "B1",
+    parkingType: "Car",
+    parkingStatus: "Occupied",
   },
   {
-    id: 4,
-    spotRegion: "D",
-    spotName: "D1",
-    spots: [
-      {
-        id: 13,
-        spotName: "D1",
-        spotRegion: "D",
-        spotType: "Car",
-        spotDescription: "D1",
-        spotImage: null,
-        spotLatitude: 0,
-        spotLongitude: 0,
-        spotAddress: null,
-        occupied: false,
-      },
-      {
-        id: 14,
-        spotName: "D2",
-        spotRegion: "D",
-        spotType: "Car",
-        spotDescription: "D2",
-        spotImage: null,
-        spotLatitude: 0,
-        spotLongitude: 0,
-        spotAddress: null,
-        occupied: false,
-      },
-    ],
+    spotId: uuid.v4(),
+    parkingRegion: "B",
+    parkingName: "B2",
+    parkingType: "Car",
+    parkingStatus: "Occupied",
   },
   {
-    id: 5,
-    spotRegion: "E",
-    spotName: "E1",
-    spots: [
-      {
-        id: 15,
-        spotName: "E1",
-        spotRegion: "E",
-        spotType: "Car",
-        spotDescription: "E1",
-        spotImage: null,
-        spotLatitude: 0,
-        spotLongitude: 0,
-        spotAddress: null,
-        occupied: false,
-      },
-    ],
+    spotId: uuid.v4(),
+    parkingRegion: "A",
+    parkingName: "A3",
+    parkingType: "Car",
+    parkingStatus: "Occupied",
+  },
+  {
+    spotId: uuid.v4(),
+    parkingRegion: "A",
+    parkingName: "A4",
+    parkingType: "Car",
+    parkingStatus: "Occupied",
+  },
+  {
+    spotId: uuid.v4(),
+    parkingRegion: "B",
+    parkingName: "B3",
+    parkingType: "Car",
+    parkingStatus: "Occupied",
+  },
+  {
+    spotId: uuid.v4(),
+    parkingRegion: "B",
+    parkingName: "B4",
+    parkingType: "Car",
+    parkingStatus: "Occupied",
+  },
+  {
+    spotId: uuid.v4(),
+    parkingRegion: "A",
+    parkingName: "A5",
+    parkingType: "Car",
+    parkingStatus: "Occupied",
+  },
+  {
+    spotId: uuid.v4(),
+    parkingRegion: "C",
+    parkingName: "C1",
+    parkingType: "Car",
+    parkingStatus: "Occupied",
+  },
+  {
+    spotId: uuid.v4(),
+    parkingRegion: "C",
+    parkingName: "C2",
+    parkingType: "Car",
+    parkingStatus: "Occupied",
+  },
+  {
+    spotId: uuid.v4(),
+    parkingRegion: "D",
+    parkingName: "D1",
+    parkingType: "Car",
+    parkingStatus: "Occupied",
   },
 ];
 
@@ -263,17 +112,31 @@ export function ScreenB() {
   }
   function openSpotDetails(spot: any) {
     navigation.navigate("spotDetail", {
-      spotOccupied: spot.occupied,
-      spotName: spot.spotName,
-      spotRegion: spot.spotRegion,
-      spotType: spot.spotType,
-      spotDescription: spot.spotDescription,
+      spotName: spot.parkingName,
+      spotOccupied: spot.parkingStatus,
+      spotType: spot.parkingType,
+      parkingRegion: spot.parkingRegion,
     });
   }
 
-  function generateUniqueKey() {
-    return (Math.random().toString(36).substr(2, 9) + uuid.v4).toString();
-  }
+  //nest the data by region and then map through the regions
+  const regions = parkingSpots.reduce((acc: any, spot: any) => {
+    if (!acc[spot.parkingRegion]) {
+      //if the region doesn't exist, create it
+      acc[spot.parkingRegion] = []; //create the region
+    } //if the region exists, push the spot into the region
+    acc[spot.parkingRegion].push(spot); // push the spot into the region
+    return acc; //return the region
+  }, {}); //initialize the accumulator as an empty object
+
+  const regionsArray = Object.keys(regions).map((region) => {
+    //map through the regions
+    return {
+      //return an object with the region name and the spots in that region
+      regionName: region, //the region name
+      spots: regions[region], //the spots in that region
+    }; //return the object
+  }); //map through the regions
 
   return (
     <View style={styles.container}>
@@ -281,66 +144,51 @@ export function ScreenB() {
         <Text style={styles.textTitle}>Vagas</Text>
         <View style={styles.spotsContainer}>
           <ScrollView horizontal={false} showsHorizontalScrollIndicator={false}>
-            {parkingSpotsData.map((item: any, index: any) => {
+            {regionsArray.map((region) => {
               return (
-                <View style={styles.spotContainer}>
-                  <Text key={generateUniqueKey()} style={styles.spotTitle}>
-                    {item.spotRegion}
-                  </Text>
-                  <ScrollView horizontal={true} key={index * Math.random()}>
-                    <FlatList
-                      key={generateUniqueKey()}
-                      data={item.spots}
-                      showsHorizontalScrollIndicator={false}
-                      renderItem={({ item }) => (
-                        <View
-                          key={generateUniqueKey()}
-                          style={
-                            item.occupied
-                              ? styles.spotOccupied
-                              : styles.spotFree
-                          }
-                        >
-                          <Pressable
-                            key={generateUniqueKey()}
-                            onPress={() => openSpotDetails(item)}
-                            style={styles.spotButton}
-                          >
-                            <Image
-                              key={generateUniqueKey()}
-                              style={styles.spotImage}
-                              source={require("../media/car.png")}
-                            />
-                            <Text
-                              key={ generateUniqueKey()}
-                              style={styles.spotName}
-                            >
-                              {item.spotName}
-                            </Text>
-                          </Pressable>
-                        </View>
-                      )}
-                      keyExtractor={(item) =>  generateUniqueKey()}
-                      numColumns={5}
-                      scrollEnabled={true}
-                      scrollToOverflowEnabled={true}
-                    />
-                  </ScrollView>
+                <View key={region.regionName}>
+                  <View style={styles.regionContainer}>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <Text style={styles.regionText}>{region.regionName}</Text>
+                      <Text style={styles.regionText}>
+                        Vagas: {region.spots.length}
+                      </Text>
+                    </View>
+                  </View>
+
+                  <FlatList
+                    data={region.spots}
+                    keyExtractor={(item) => item.spotId}
+                    showsHorizontalScrollIndicator={false}
+                    horizontal={true}
+                    renderItem={({ item }) => (
+                      <TouchableOpacity
+                        style={[
+                          styles.spot,
+                          item.parkingStatus ? styles.occupied : styles.free,
+                        ]}
+                        onPress={() => openSpotDetails(item)}
+                      >
+                        <Image
+                          style={styles.spotImage}
+                          source={require("../media/car.png")}
+                        />
+                        <Text style={styles.spotName}>{item.parkingName}</Text>
+                      </TouchableOpacity>
+                    )}
+                  />
                 </View>
               );
             })}
-            
           </ScrollView>
         </View>
       </View>
-      <View style={styles.nav}>
-        <Pressable style={styles.buttonLeft} onPress={openScreenA}>
-          <Text style={styles.text}>Ir para home</Text>
-        </Pressable>
-        <Pressable style={styles.buttonRight} onPress={openScreenB}>
-          <Text style={styles.text}>Ir para vagas</Text>
-        </Pressable>
-      </View>
+      <Navbottom openScreenA={openScreenA} openScreenB={openScreenB} />
     </View>
   );
 }
@@ -353,14 +201,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   nav: {
-    backgroundColor: "purple",
+    flexDirection: "row",
+    justifyContent: "space-between",
     width: "100%",
+    height: 50,
+    backgroundColor: "#686868",
+    alignItems: "center",
     position: "absolute",
     bottom: 0,
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-around",
-    height: 50,
+
+    shadowColor: "#000",
   },
   buttonLeft: {
     borderColor: "gray",
@@ -432,78 +282,74 @@ const styles = StyleSheet.create({
     flex: 1,
     flexGrow: 2,
   },
-  spotTitle: {
+  spot: {
+    width: 100,
+    height: 100,
+    backgroundColor: "purple",
+    borderRadius: 20,
+    margin: 10,
+    justifyContent: "center",
+    alignContent: "center",
+    alignItems: "center",
+  },
+  textSpot: {
+    color: "white",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  textRegion: {
     color: "#929292",
-
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 5,
-  },
-  spotContent: {
-    flex: 1,
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-  },
-  spotButton: {
-    height: 50,
-    width: 140,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 20,
-    marginBottom: 10,
-  },
-  spotButtonText: {
-    color: "#929292",
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  spotText: {
-    color: "#929292",
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  spotTextOccupied: {
-    color: "purple",
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  spotTextFree: {
-    color: "green",
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  spotImage: {
-    height: 100,
-    width: 100,
-  },
-  spotFree: {
-    backgroundColor: "#ededed",
-    height: 140,
-    width: 120,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 20,
-    marginBottom: 10,
-    marginRight: 10,
-    padding: 20,
-  },
-  spotOccupied: {
-    backgroundColor: "purple",
-    color: "white",
-    height: 140,
-    width: 120,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 20,
-    marginBottom: 10,
-    marginRight: 10,
-    padding: 20,
+    padding: 15,
+    alignSelf: "flex-start",
   },
   spotName: {
-    //light purple
-    color: "#976d97",
+    color: "#ececec",
+    fontSize: 14,
+    fontWeight: "bold",
+    marginTop: -10,
+  },
+  spotType: {
+    color: "white",
+    fontSize: 15,
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  spotDescription: {
+    color: "white",
+    fontSize: 15,
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  free: {
+    backgroundColor: "#b6b6b6",
+  },
+  occupied: {
+    backgroundColor: "#9d63c4",
+  },
+  spotImage: {
+    width: 80,
+    height: 80,
+  },
+  regionContainer: {
+    width: "100%",
+    backgroundColor: "#E8E8E8",
+    borderRadius: 20,
+    marginBottom: 20,
+    flex: 1,
+    flexGrow: 2,
+    justifyContent: "space-around",
+  },
+  regionText: {
+    color: "#929292",
     fontSize: 20,
     fontWeight: "bold",
+    marginBottom: 5,
+    padding: 5,
+    paddingHorizontal: 15,
+    alignSelf: "flex-start",
+    justifyContent: "space-around",
   },
 });
