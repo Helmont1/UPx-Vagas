@@ -35,7 +35,6 @@ export function ScreenB(props: NativeStackScreenProps<any, any>) {
 
   const [parkingSpots, setParkingSpots] = useState([]);
 
-
   useEffect(() => {
     fetch("https://upx4api2022.azurewebsites.net/spot", {
       method: "GET",
@@ -66,7 +65,7 @@ export function ScreenB(props: NativeStackScreenProps<any, any>) {
         .catch((error) => {
           console.error(error);
         });
-    }, 1000000);
+    }, 10000);
   }, []);
 
   //nest the data by region and then map through the regions

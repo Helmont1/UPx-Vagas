@@ -29,10 +29,10 @@ const Scanner: React.FunctionComponent<IStackScreenProps> = (props) => {
             region: scanData.region,
             name: scanData.name,
             type: scanData.type,
-            latitude: scanData.latitude,
-            longitude: scanData.longitude,
-            address: scanData.address,
-            occupied: scanData.occupied,
+            latitude: scanData.latitude === undefined ? 40.0 : scanData.latitude,
+            longitude: scanData.longitude === undefined ? 40.0 : scanData.longitude,
+            address: scanData.address === undefined ? "Rua do Pão" : scanData.address,
+            occupied: !scanData.occupied,
           }),
         });
         if (response.status === 200) {
@@ -44,6 +44,8 @@ const Scanner: React.FunctionComponent<IStackScreenProps> = (props) => {
             parkingRegion: scanData.region,
             spotId: scanData.spotId,
             spotAdress: scanData.address,
+            latitude: scanData.latitude,
+            longitude: scanData.longitude,
           });
         }
       };
