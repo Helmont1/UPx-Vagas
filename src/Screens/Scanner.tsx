@@ -14,10 +14,43 @@ const Scanner: React.FunctionComponent<IStackScreenProps> = (props) => {
   }, []);
   React.useEffect(() => {
     if (scanData) {
-      console.log(scanData);
+      //make a put request to the api
+      //if the request is successful, navigate to the spot details screen
+      //if the request is not successful, show an error message
+      const putRequest = async () => {
+        const response = await fetch(`https://upx4api2022.azurewebsites.net/spot/${scanData.spotId}`, {
+          method: "PUT",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            spotId: scanData.spotId,
+            region: scanData.region,
+            name: scanData.name,
+            type: scanData.type,
+            latitude: scanData.latitude,
+            longitude: scanData.longitude,
+            address: scanData.address,
+            occupied: scanData.occupied,
+          }),
+        });
+        if (response.status === 200) {
+           
+          props.navigation.navigate("spotDetail", {
+            spotName: scanData.name,
+            spotOccupied: scanData.occupied,
+            spotType: scanData.type,
+            parkingRegion: scanData.region,
+            spotId: scanData.spotId,
+            spotAdress: scanData.address,
+          });
+        }
+      };
+      putRequest();
     }
   }, [scanData]);
-
+  
   const requestCameraPermission = async () => {
     try {
       const { status, granted } =

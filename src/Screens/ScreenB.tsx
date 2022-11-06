@@ -12,97 +12,9 @@ import {
   Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import uuid from "react-native-uuid";
 import Navbottom from "../components/NavBottom";
 
-const parkingSpots = [
-  {
-    spotId: uuid.v4(),
-    parkingRegion: "A",
-    parkingName: "A1",
-    parkingType: "Car",
-    parkingStatus: false,
-  },
-  {
-    spotId: uuid.v4(),
-    parkingRegion: "A",
-    parkingName: "A2",
-    parkingType: "Car",
-    parkingStatus: false,
-  },
-  {
-    spotId: uuid.v4(),
-    parkingRegion: "B",
-    parkingName: "B1",
-    parkingType: "Car",
-    parkingStatus: "Occupied",
-  },
-  {
-    spotId: uuid.v4(),
-    parkingRegion: "B",
-    parkingName: "B2",
-    parkingType: "Car",
-    parkingStatus: "Occupied",
-  },
-  {
-    spotId: uuid.v4(),
-    parkingRegion: "A",
-    parkingName: "A3",
-    parkingType: "Car",
-    parkingStatus: "Occupied",
-  },
-  {
-    spotId: uuid.v4(),
-    parkingRegion: "A",
-    parkingName: "A4",
-    parkingType: "Car",
-    parkingStatus: "Occupied",
-  },
-  {
-    spotId: uuid.v4(),
-    parkingRegion: "B",
-    parkingName: "B3",
-    parkingType: "Car",
-    parkingStatus: "Occupied",
-  },
-  {
-    spotId: uuid.v4(),
-    parkingRegion: "B",
-    parkingName: "B4",
-    parkingType: "Car",
-    parkingStatus: "Occupied",
-  },
-  {
-    spotId: uuid.v4(),
-    parkingRegion: "A",
-    parkingName: "A5",
-    parkingType: "Car",
-    parkingStatus: "Occupied",
-  },
-  {
-    spotId: uuid.v4(),
-    parkingRegion: "C",
-    parkingName: "C1",
-    parkingType: "Car",
-    parkingStatus: "Occupied",
-  },
-  {
-    spotId: uuid.v4(),
-    parkingRegion: "C",
-    parkingName: "C2",
-    parkingType: "Car",
-    parkingStatus: "Occupied",
-  },
-  {
-    spotId: uuid.v4(),
-    parkingRegion: "D",
-    parkingName: "D1",
-    parkingType: "Car",
-    parkingStatus: "Occupied",
-  },
-];
-
-export function ScreenB() {
+export function ScreenB(props: NativeStackScreenProps<any, any>) {
   const navigation = useNavigation();
   function openScreenA() {
     navigation.navigate("Home");
@@ -112,20 +24,58 @@ export function ScreenB() {
   }
   function openSpotDetails(spot: any) {
     navigation.navigate("spotDetail", {
-      spotName: spot.parkingName,
-      spotOccupied: spot.parkingStatus,
-      spotType: spot.parkingType,
-      parkingRegion: spot.parkingRegion,
+      spotName: spot.name,
+      spotOccupied: spot.occupied,
+      spotType: spot.type,
+      parkingRegion: spot.region,
+      spotId: spot.spotId,
+      spotAdress: spot.adress,
     });
   }
 
+  const [parkingSpots, setParkingSpots] = useState([]);
+
+
+  useEffect(() => {
+    fetch("https://upx4api2022.azurewebsites.net/spot", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        setParkingSpots(json);
+        console.log(json);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    setInterval(() => {
+      fetch("https://upx4api2022.azurewebsites.net/spot", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          setParkingSpots(json);
+          console.log(json);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }, 1000000);
+  }, []);
+
   //nest the data by region and then map through the regions
   const regions = parkingSpots.reduce((acc: any, spot: any) => {
-    if (!acc[spot.parkingRegion]) {
+    if (!acc[spot.region]) {
       //if the region doesn't exist, create it
-      acc[spot.parkingRegion] = []; //create the region
+      acc[spot.region] = []; //create the region
     } //if the region exists, push the spot into the region
-    acc[spot.parkingRegion].push(spot); // push the spot into the region
+    acc[spot.region].push(spot); // push the spot into the region
     return acc; //return the region
   }, {}); //initialize the accumulator as an empty object
 
@@ -144,47 +94,53 @@ export function ScreenB() {
         <Text style={styles.textTitle}>Vagas</Text>
         <View style={styles.spotsContainer}>
           <ScrollView horizontal={false} showsHorizontalScrollIndicator={false}>
-            {regionsArray.map((region) => {
-              return (
-                <View key={region.regionName}>
-                  <View style={styles.regionContainer}>
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <Text style={styles.regionText}>{region.regionName}</Text>
-                      <Text style={styles.regionText}>
-                        Vagas: {region.spots.length}
-                      </Text>
-                    </View>
-                  </View>
-
-                  <FlatList
-                    data={region.spots}
-                    keyExtractor={(item) => item.spotId}
-                    showsHorizontalScrollIndicator={false}
-                    horizontal={true}
-                    renderItem={({ item }) => (
-                      <TouchableOpacity
-                        style={[
-                          styles.spot,
-                          item.parkingStatus ? styles.occupied : styles.free,
-                        ]}
-                        onPress={() => openSpotDetails(item)}
+            {regionsArray ? (
+              regionsArray.map((region) => {
+                return (
+                  <View key={region.regionName + "view"}>
+                    <View style={styles.regionContainer}>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                        }}
                       >
-                        <Image
-                          style={styles.spotImage}
-                          source={require("../media/car.png")}
-                        />
-                        <Text style={styles.spotName}>{item.parkingName}</Text>
-                      </TouchableOpacity>
-                    )}
-                  />
-                </View>
-              );
-            })}
+                        <Text style={styles.regionText}>
+                          {region.regionName}
+                        </Text>
+                        <Text style={styles.regionText}>
+                          Vagas: {region.spots.length}
+                        </Text>
+                      </View>
+                    </View>
+
+                    <FlatList
+                      data={region.spots}
+                      keyExtractor={(item) => item.spotId}
+                      showsHorizontalScrollIndicator={false}
+                      horizontal={true}
+                      renderItem={({ item }) => (
+                        <TouchableOpacity
+                          style={[
+                            styles.spot,
+                            item.occupied ? styles.occupied : styles.free,
+                          ]}
+                          onPress={() => openSpotDetails(item)}
+                        >
+                          <Image
+                            style={styles.spotImage}
+                            source={require("../media/car.png")}
+                          />
+                          <Text style={styles.spotName}>{item.name}</Text>
+                        </TouchableOpacity>
+                      )}
+                    />
+                  </View>
+                );
+              })
+            ) : (
+              <Text>Não há vagas disponíveis</Text>
+            )}
           </ScrollView>
         </View>
       </View>
@@ -230,7 +186,6 @@ const styles = StyleSheet.create({
     padding: 5,
     marginLeft: "auto",
     marginRight: "auto",
-    marginTop: "auto",
     marginBottom: "auto",
   },
   textTitle: {
@@ -260,7 +215,6 @@ const styles = StyleSheet.create({
   chooseSpot: {
     marginLeft: "auto",
     marginRight: "auto",
-    marginTop: 20,
     marginBottom: "auto",
     height: 50,
     width: "50%",
@@ -309,7 +263,6 @@ const styles = StyleSheet.create({
     color: "#ececec",
     fontSize: 14,
     fontWeight: "bold",
-    marginTop: -10,
   },
   spotType: {
     color: "white",

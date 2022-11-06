@@ -1,12 +1,10 @@
 export interface IQRCodeProps {
-  id: number;
-  spotName: string;
-  spotRegion: string;
-  spotType: string;
-  spotDescription: string;
-  spotImage: any;
-  spotLatitude: number;
-  spotLongitude: number;
-  spotAddress: any;
+  spotId: number;
+  region: string;
+  name: string;
+  type: string;
+  latitude: number;
+  longitude: number;
+  address: string;
   occupied: boolean;
 }

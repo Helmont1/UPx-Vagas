@@ -68,11 +68,10 @@ const styles = StyleSheet.create({
     padding: 5,
     marginLeft: "auto",
     marginRight: "auto",
-    marginTop: "auto",
     marginBottom: "auto",
   },
   Header: {
-    backgroundColor: "purple",
+    backgroundColor: "#000000",
     width: "100%",
     position: "absolute",
     top: 0,
@@ -88,7 +87,6 @@ const styles = StyleSheet.create({
     padding: 5,
     marginLeft: "auto",
     marginRight: "auto",
-    marginTop: "auto",
     marginBottom: "auto",
   },
   body: {
@@ -119,7 +117,6 @@ const styles = StyleSheet.create({
     padding: 5,
     marginLeft: "auto",
     marginRight: "auto",
-    marginTop: "auto",
     marginBottom: "auto",
   },
   bodyContent: {
