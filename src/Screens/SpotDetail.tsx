@@ -34,36 +34,40 @@ export const SpotDetail = ({ route }: any) => {
   const navigation = useNavigation();
 
   function openScreenA() {
-    navigation.navigate("Home");
+    navigation.navigate("home");
   }
 
   function openScreenB() {
-    navigation.navigate("Vagas");
+    navigation.navigate("vagas");
   }
 
   const handleSpotChange = async () => {
-    const putRequest = await fetch(`https://upx4api2022.azurewebsites.net/spot/${routeObj.spotId}`, {
+    const putRequest = await fetch(
+      `https://upx4api2022.azurewebsites.net/spot/${routeObj.spotId}`,
+      {
         method: "PUT",
         headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
+          Accept: "application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            spotId:  routeObj.spotId,
-            region: routeObj.region,
-            name: routeObj.name,
-            type: routeObj.type,
-            latitude: routeObj.latitude,
-            longitude: routeObj.longitude,
-            address: routeObj.address? routeObj.address : "Rua do Pão",
-            occupied: !routeObj.occupied,
+          spotId: routeObj.spotId,
+          region: routeObj.region,
+          name: routeObj.name,
+          type: routeObj.type,
+          latitude: routeObj.latitude,
+          longitude: routeObj.longitude,
+          address: routeObj.address ? routeObj.address : "Rua do Pão",
+          occupied: !routeObj.occupied,
         }),
-    });
+      }
+    );
     if (putRequest.status === 200) {
-        setClicked(true);
-    }};
+      setClicked(true);
+    }
+  };
 
-    return (
+  return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.textHeader}>Detalhes da vaga</Text>
@@ -85,10 +89,8 @@ export const SpotDetail = ({ route }: any) => {
         </TouchableOpacity>
       </View>
     </View>
-
-    );  
+  );
 };
-
 
 const styles = StyleSheet.create({
   container: {

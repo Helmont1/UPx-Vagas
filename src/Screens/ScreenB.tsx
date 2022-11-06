@@ -65,7 +65,7 @@ export function ScreenB(props: NativeStackScreenProps<any, any>) {
         .catch((error) => {
           console.error(error);
         });
-    }, 10000);
+    }, 10000); // 10 seconds
   }, []);
 
   //nest the data by region and then map through the regions
