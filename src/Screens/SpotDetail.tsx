@@ -22,7 +22,7 @@ export const SpotDetail = ({ route }: any) => {
     occupied: route.params.spotOccupied,
     type: route.params.spotType,
     region: route.params.parkingRegion,
-    address: route.params.spotAdress,
+    address: route.params.spotAdress ? route.params.spotAdress : "Rua do Pão",
     latitude:
       route.params.latitude === undefined ? 40.0 : route.params.latitude,
     longitude:
@@ -41,34 +41,29 @@ export const SpotDetail = ({ route }: any) => {
     navigation.navigate("Vagas");
   }
 
-//   function handleOccupiedButton() {
-//     const response = await fetch(
-//       `https://upx4api2022.azurewebsites.net/spot/${routeObj.spotId}`,
-//       {
-//         method: "PUT",
-//         headers: {
-//           Accept: "application/json",
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify({
-//           spotId: routeObj.spotId,
-//           region: routeObj.region,
-//           name: routeObj.name,
-//           type: routeObj.type,
-//           latitude: routeObj.latitude,
-//           longitude: routeObj.longitude,
-//           address: routeObj.address,
-//           occupied: !routeObj.occupied,
-//         }),
-//       }
-//     );
-//     if (response.status === 200) {
-//       //navigate to vagas
-//       navigation.navigate("Vagas", { routeObj });
-//     }
-//   }
+  const handleSpotChange = async () => {
+    const putRequest = await fetch(`https://upx4api2022.azurewebsites.net/spot/${routeObj.spotId}`, {
+        method: "PUT",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            spotId:  routeObj.spotId,
+            region: routeObj.region,
+            name: routeObj.name,
+            type: routeObj.type,
+            latitude: routeObj.latitude,
+            longitude: routeObj.longitude,
+            address: routeObj.address? routeObj.address : "Rua do Pão",
+            occupied: !routeObj.occupied,
+        }),
+    });
+    if (putRequest.status === 200) {
+        setClicked(true);
+    }};
 
-  return (
+    return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.textHeader}>Detalhes da vaga</Text>
@@ -83,15 +78,17 @@ export const SpotDetail = ({ route }: any) => {
         </View>
       </View>
       <View style={styles.footer}>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={handleSpotChange}>
           <Text style={styles.textButton}>
             {routeObj.occupied ? "Liberar vaga" : "Ocupar vaga"}
           </Text>
         </TouchableOpacity>
       </View>
     </View>
-  );
+
+    );  
 };
+
 
 const styles = StyleSheet.create({
   container: {
