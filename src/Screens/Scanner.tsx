@@ -18,6 +18,7 @@ const Scanner: React.FunctionComponent<IStackScreenProps> = (props) => {
       //if the request is successful, navigate to the spot details screen
       //if the request is not successful, show an error message
       const putRequest = async () => {
+        try {
         const response = await fetch(`https://upx4api2022.azurewebsites.net/spot/${scanData.spotId}`, {
           method: "PUT",
           headers: {
@@ -36,18 +37,14 @@ const Scanner: React.FunctionComponent<IStackScreenProps> = (props) => {
           }),
         });
         if (response.status === 200) {
-           
-          props.navigation.navigate("spotDetail", {
-            spotName: scanData.name,
-            spotOccupied: scanData.occupied,
-            spotType: scanData.type,
-            parkingRegion: scanData.region,
-            spotId: scanData.spotId,
-            spotAdress: scanData.address,
-            latitude: scanData.latitude,
-            longitude: scanData.longitude,
-          });
+          if (props.navigation) {
+            props.navigation.navigate("vagas");
+          
+          }
         }
+      } catch (error) {
+        console.log(error);
+      }
       };
       putRequest();
     }
@@ -70,10 +67,7 @@ const Scanner: React.FunctionComponent<IStackScreenProps> = (props) => {
   };
 
   if (scanData) {
-    if (props.navigation) {
-      props.navigation.navigate("Vagas", { scanData });
-    }
-
+    
     return (
       <View style={styles.container}>
        
