@@ -18,13 +18,8 @@ export function ScreenA() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.Header}>
-        <Text style={styles.textHeader}>Bem vindo ao estacionamento</Text>
-      </View>
       <View style={styles.body}>
-        <View style={styles.bodyContent}>
           <QRCode />
-        </View>
       </View>
       <Navbottom openScreenA={openScreenA} openScreenB={openScreenB} />
     </View>
@@ -34,15 +29,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    width: "100%",
+    
   },
   //make bodyContent occupy the full width and height of the screen
-  bodyContent: {
-    flex: 1,
-    alignItems: "center",
-    padding: 30,
-  },
   //make header transparent and floating above the content
   Header: {
     flex: 1,
@@ -56,10 +46,20 @@ const styles = StyleSheet.create({
     top: 0,
   },
   body: {
-    flex: 3,
+    flex: 1,
     alignItems: "center",
-    justifyContent: "space-around",
+    justifyContent: "center",
+    width: "100%",
+    height: "100%",
+    backgroundColor: "#fff",
+    //make it floating above the content
+    
+    position: "absolute",
+    top: 30,
+    bottom: 20,
   },
+  
+    
   textHeader: {
     fontSize: 15,
     fontWeight: "bold",

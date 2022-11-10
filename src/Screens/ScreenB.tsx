@@ -23,14 +23,7 @@ export function ScreenB(props: NativeStackScreenProps<any, any>) {
     navigation.navigate("Vagas");
   }
   function openSpotDetails(spot: any) {
-    navigation.navigate("spotDetail", {
-      spotName: spot.name,
-      spotOccupied: spot.occupied,
-      spotType: spot.type,
-      parkingRegion: spot.region,
-      spotId: spot.spotId,
-      spotAddress: spot.address,
-    });
+    navigation.navigate("spotDetail", spot);
   }
 
   const [parkingSpots, setParkingSpots] = useState([]);
@@ -60,7 +53,6 @@ export function ScreenB(props: NativeStackScreenProps<any, any>) {
         .then((response) => response.json())
         .then((json) => {
           setParkingSpots(json);
-          console.log(json);
         })
         .catch((error) => {
           console.error(error);
@@ -96,7 +88,7 @@ export function ScreenB(props: NativeStackScreenProps<any, any>) {
             {regionsArray ? (
               regionsArray.map((region) => {
                 return (
-                  <View key={region.regionName + "view"}>
+                  <View key={region.regionName + "view"} style={styles.region}>
                     <View style={styles.regionContainer}>
                       <View
                         style={{
@@ -112,28 +104,29 @@ export function ScreenB(props: NativeStackScreenProps<any, any>) {
                         </Text>
                       </View>
                     </View>
-
-                    <FlatList
-                      data={region.spots}
-                      keyExtractor={(item) => item.spotId}
-                      showsHorizontalScrollIndicator={false}
-                      horizontal={true}
-                      renderItem={({ item }) => (
-                        <TouchableOpacity
-                          style={[
-                            styles.spot,
-                            item.occupied ? styles.occupied : styles.free,
-                          ]}
-                          onPress={() => openSpotDetails(item)}
-                        >
-                          <Image
-                            style={styles.spotImage}
-                            source={require("../media/car.png")}
-                          />
-                          <Text style={styles.spotName}>{item.name}</Text>
-                        </TouchableOpacity>
-                      )}
-                    />
+                    <View style={styles.spots}>
+                      <FlatList
+                        data={region.spots}
+                        keyExtractor={(item) => item.spotId}
+                        showsHorizontalScrollIndicator={false}
+                        horizontal={true}
+                        renderItem={({ item }) => (
+                          <TouchableOpacity
+                            style={[
+                              styles.spot,
+                              item.occupied ? styles.occupied : styles.free,
+                            ]}
+                            onPress={() => openSpotDetails(item)}
+                          >
+                            <Image
+                              style={styles.spotImage}
+                              source={require("../media/car.png")}
+                            />
+                            <Text style={styles.spotName}>{item.name}</Text>
+                          </TouchableOpacity>
+                        )}
+                      />
+                    </View>
                   </View>
                 );
               })
@@ -143,7 +136,14 @@ export function ScreenB(props: NativeStackScreenProps<any, any>) {
           </ScrollView>
         </View>
       </View>
-      <Navbottom openScreenA={openScreenA} openScreenB={openScreenB} />
+      <View style={styles.nav}>
+        <Pressable style={styles.buttonLeft} onPress={openScreenA}>
+          <Text style={styles.text}>Home</Text>
+        </Pressable>
+        <Pressable style={styles.buttonRight} onPress={openScreenB}>
+          <Text style={styles.text}>Vagas</Text>
+        </Pressable>
+      </View>
     </View>
   );
 }
@@ -157,13 +157,13 @@ const styles = StyleSheet.create({
   },
   parkingContainer: {
     flex: 1,
-    backgroundColor: "#686868",
+    backgroundColor: "#d9d9d9",
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
   },
   textTitle: {
-    color: "#acacac",
+    color: "#afaeae",
     fontSize: 30,
     fontWeight: "bold",
     marginTop: 20,
@@ -171,16 +171,91 @@ const styles = StyleSheet.create({
   },
   spotsContainer: {
     flex: 1,
-    backgroundColor: "#f7f7f7",
+    backgroundColor: "#fafafa",
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
-    height: "100%",
+    height: "50%",
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    marginTop: 10,
     paddingTop: 30,
+    paddingBottom: 70,
   },
-    
+  regionContainer: {
+    flex: 1,
+    backgroundColor: "#fafafa",
+    justifyContent: "space-between",
+    width: "100%",
+    height: "100%",
+    marginTop: 10,
+    paddingLeft: 30,
+    paddingRight: 30,
+  },
+
+  regionText: {
+    color: "#afaeae",
+    fontSize: 20,
+    fontWeight: "bold",
+    marginTop: 20,
+    marginBottom: 20,
+  },
+  spot: {
+    backgroundColor: "#fafafa",
+    alignItems: "center",
+    justifyContent: "center",
+    width: 100,
+    height: 100,
+    borderRadius: 10,
+    margin: 10,
+  },
+
+  occupied: {
+    backgroundColor: "rgb(206, 206, 206)",
+  },
+  free: {
+    backgroundColor: "#812bea",
+  },
+  spotImage: {
+    width: 50,
+    height: 50,
+  },
+  spotName: {
+    color: "#fffefe",
+    fontSize: 15,
+    fontWeight: "bold",
+    marginTop: 10,
+  },
+  spots: {
+    flex: 1,
+    backgroundColor: "#fafafa",
+    borderBottomColor: "#afaeae",
+    borderBottomWidth: 1,
+    alignItems: "center",
+    borderTopColor: "#afaeae",
+    borderTopWidth: 1,
+  },
+  nav: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: "100%",
+    height: 50,
+    backgroundColor: "#686868",
+    alignItems: "center",
+    position: "absolute",
+    bottom: 0,
+  },
+  buttonLeft: {
+    borderColor: "gray",
+    textAlign: "center",
+    backgroundColor: "#686868",
+  },
+  buttonRight: {
+    borderColor: "gray",
+    textAlign: "center",
+    backgroundColor: "#686868",
+  },
+  text: {
+    color: "white",
+  },
 
 });
