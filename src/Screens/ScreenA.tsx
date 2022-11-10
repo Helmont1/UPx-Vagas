@@ -22,9 +22,6 @@ export function ScreenA() {
         <Text style={styles.textHeader}>Bem vindo ao estacionamento</Text>
       </View>
       <View style={styles.body}>
-        <View style={styles.bodyHeader}>
-          <Text style={styles.textBodyHeader}>Escaneie uma vaga</Text>
-        </View>
         <View style={styles.bodyContent}>
           <QRCode />
         </View>
@@ -40,93 +37,49 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  nav: {
-    backgroundColor: "purple",
-    width: "100%",
-    position: "absolute",
-    bottom: 0,
+  //make bodyContent occupy the full width and height of the screen
+  bodyContent: {
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-around",
-    height: 50,
+    alignItems: "center",
+    padding: 30,
   },
-  buttonLeft: {
-    borderColor: "gray",
-    textAlign: "center",
-    width: "50%",
-    borderRightWidth: 1,
-  },
-  buttonRight: {
-    borderColor: "gray",
-    textAlign: "center",
-    width: "50%",
-  },
-  text: {
-    color: "white",
-    fontSize: 20,
-    fontWeight: "bold",
-    padding: 5,
-    marginLeft: "auto",
-    marginRight: "auto",
-    marginBottom: "auto",
-  },
+  //make header transparent and floating above the content
   Header: {
-    backgroundColor: "#000000",
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
     width: "100%",
+    height: 50,
+    backgroundColor: "#e6e6e6",
+   //make it floating above the content
     position: "absolute",
     top: 0,
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-around",
-    height: 50,
-  },
-  textHeader: {
-    color: "white",
-    fontSize: 20,
-    fontWeight: "bold",
-    padding: 5,
-    marginLeft: "auto",
-    marginRight: "auto",
-    marginBottom: "auto",
   },
   body: {
-    backgroundColor: "white",
-    width: "100%",
-    position: "absolute",
-    top: 50,
-    flex: 1,
-    flexDirection: "column",
+    flex: 3,
+    alignItems: "center",
     justifyContent: "space-around",
-    height: 500,
   },
-  bodyHeader: {
-    backgroundColor: "purple",
-    width: "100%",
-    position: "absolute",
-    top: 0,
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-around",
-    height: 50,
-    marginBottom: 10,
+  textHeader: {
+    fontSize: 15,
+    fontWeight: "bold",
+    color: "#000",
   },
   textBodyHeader: {
-    color: "white",
     fontSize: 20,
     fontWeight: "bold",
-    padding: 5,
-    marginLeft: "auto",
-    marginRight: "auto",
-    marginBottom: "auto",
+    color: "#000",
   },
-  bodyContent: {
-    backgroundColor: "white",
-    width: "100%",
-    position: "absolute",
-    top: 50,
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "space-around",
-    height: 600,
+  button: {
+    backgroundColor: "#000",
+    padding: 10,
+    borderRadius: 10,
   },
+  textButton: {
+    color: "#fff",
+  },
+
+
+
+ 
 });

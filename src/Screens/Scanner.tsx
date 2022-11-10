@@ -111,7 +111,12 @@ const Scanner: React.FunctionComponent<IStackScreenProps> = (props) => {
             }
           }}
           style={styles.scanner}
+          focusable={true}
+          
         />
+        {/* flashlightMode={BarCodeScanner.Constants.FlashMode.torch} */}
+        
+        <Text style={styles.text}>Escaneie o QRCode</Text>
       </View>
     );
 
@@ -137,9 +142,11 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: "white",
   },
+  //scanner full screen
   scanner: {
-    height: 400,
-    width: 400,
+    flex: 1,
+    width: "100%",
   },
+
     
 });

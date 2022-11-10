@@ -22,11 +22,10 @@ export const SpotDetail = ({ route }: any) => {
     occupied: route.params.spotOccupied,
     type: route.params.spotType,
     region: route.params.parkingRegion,
-    address: route.params.spotAdress ? route.params.spotAdress : "Rua do Pão",
-    latitude:
-      route.params.latitude === undefined ? 40.0 : route.params.latitude,
-    longitude:
-      route.params.longitude === undefined ? 40.0 : route.params.longitude,
+    address: route.params.spotAddress,
+    latitude: route.params.spotLatitude,
+    longitude: route.params.spotLongitude,
+
   };
 
   const [clicked, setClicked] = useState(false);
@@ -57,7 +56,7 @@ export const SpotDetail = ({ route }: any) => {
           type: routeObj.type,
           latitude: routeObj.latitude,
           longitude: routeObj.longitude,
-          address: routeObj.address ? routeObj.address : "Rua do Pão",
+          address: routeObj.address,
           occupied: !routeObj.occupied,
         }),
       }
