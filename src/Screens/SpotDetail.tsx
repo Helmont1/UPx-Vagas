@@ -14,22 +14,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 
 export const SpotDetail = ({ route }: any) => {
-  console.log("ROOOUTE", route);
-
-  const routeObj = {
-    spotId: route.params.spotId,
-    name: route.params.spotName,
-    occupied: route.params.spotOccupied,
-    type: route.params.spotType,
-    region: route.params.parkingRegion,
-    address: route.params.spotAdress ? route.params.spotAdress : "Rua do Pão",
-    latitude:
-      route.params.latitude === undefined ? 40.0 : route.params.latitude,
-    longitude:
-      route.params.longitude === undefined ? 40.0 : route.params.longitude,
-  };
-
-  const [clicked, setClicked] = useState(false);
+  const spot = JSON.parse(JSON.stringify(route.params));
 
   const navigation = useNavigation();
 
@@ -41,30 +26,31 @@ export const SpotDetail = ({ route }: any) => {
     navigation.navigate("vagas");
   }
 
-  const handleSpotChange = async () => {
-    const putRequest = await fetch(
-      `https://upx4api2022.azurewebsites.net/spot/${routeObj.spotId}`,
-      {
-        method: "PUT",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          spotId: routeObj.spotId,
-          region: routeObj.region,
-          name: routeObj.name,
-          type: routeObj.type,
-          latitude: routeObj.latitude,
-          longitude: routeObj.longitude,
-          address: routeObj.address ? routeObj.address : "Rua do Pão",
-          occupied: !routeObj.occupied,
-        }),
-      }
-    );
-    if (putRequest.status === 200) {
-      setClicked(true);
-    }
+  const changeSpotStatus = () => {
+    fetch(`https://upx4api2022.azurewebsites.net/spot/${spot.spotId}`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        spotId: spot.spotId,
+        region: spot.region,
+        name: spot.name,
+        type: spot.type,
+        latitude: spot.latitude,
+        longitude: spot.longitude,
+        address: spot.address,
+        occupied: !spot.occupied,
+      }),
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        console.log(json);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
@@ -74,17 +60,15 @@ export const SpotDetail = ({ route }: any) => {
       </View>
       <View style={styles.body}>
         <View style={styles.bodyHeader}>
-          <Text style={styles.textBodyHeader}>Vaga {routeObj.name}</Text>
-          <Text style={styles.textBodyHeader}>Tipo: {routeObj.type}</Text>
-          <Text style={styles.textBodyHeader}>
-            Status: {routeObj.occupied ? "Ocupada" : "Livre"}
-          </Text>
+          <Text style={styles.textBodyHeader}>Vaga {spot.name}</Text>
+          <Text style={styles.textBodyHeader}>Região {spot.region}</Text>
+          <Text style={styles.textBodyHeader}>Endereço {spot.address}</Text>
         </View>
       </View>
       <View style={styles.footer}>
-        <TouchableOpacity style={styles.button} onPress={handleSpotChange}>
+        <TouchableOpacity style={styles.button} onPress={changeSpotStatus}>
           <Text style={styles.textButton}>
-            {routeObj.occupied ? "Liberar vaga" : "Ocupar vaga"}
+            {spot.occupied ? "Desocupar" : "Ocupar"}
           </Text>
         </TouchableOpacity>
       </View>
