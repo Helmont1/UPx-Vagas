@@ -4934,7 +4934,7 @@ expo-barcode-scanner@~11.4.0:
 
 expo-cli@^6.0.8:
   version "6.0.8"
-  resolved "https://registry.npmjs.org/expo-cli/-/expo-cli-6.0.8.tgz"
+  resolved "https://registry.yarnpkg.com/expo-cli/-/expo-cli-6.0.8.tgz#f5027cb1bcbed637ab5c61e99bf0dac892b45092"
   integrity sha512-ZVQ47l/wFsPgF9S68MT3mQCCq0HEH4wggnDdd3keZBHV8uhC1TvkdufOeWgbr7/uP5oKdfXEOQCXaYbJPdd69A==
   dependencies:
     "@babel/runtime" "7.9.0"
