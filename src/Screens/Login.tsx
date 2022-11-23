@@ -1,69 +1,90 @@
 import React from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-
-interface student {
-    id: number;
-    name: string;
-    ra: string;
-    spotId: number;
-}
-
+import { useState } from "react";
 
 const Login = () => {
-    
-    const [name, setName] = React.useState("");
-    const [ra, setRa] = React.useState("");
-    const [student, setStudent] = React.useState<student>();
 
-    const [error, setError] = React.useState("");
+
+    const [student, setStudent] = useState({
+        id: 0,
+        name: "",
+        ra: "",
+        spotId: 0,
+        email: "",
+        password: "",
+        confirmPassword: ""
+    });
+
+    const [error, setError] = useState("");
 
     const navigation = useNavigation();
 
     function openScreenA() {
-        navigation.navigate("home");
+        navigation.navigate("Home");
     }
 
     function openScreenB() {
-        navigation.navigate("hagas");
+        navigation.navigate("Vagas");
     }
+    const handleInputChange = (event: any) => {
+        const { name, value } = event.target;
+        setStudent({ ...student, [name]: value });
+    };
 
-    function handleLogin() {
-        if (name === "" || ra === "") {
-            setError("Preencha todos os campos");
-        } else {
-            setStudent({
-                id: Math.random(),
-                name: name,
-                ra: ra,
-                spotId: Math.random(),
-            });
-            setError("");
-            openScreenA();
-        }
-    }
+    
 
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Login</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Nome"
-                onChangeText={text => setName(text)}
-                value={name}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="RA"
-                onChangeText={text => setRa(text)}
-                value={ra}
-            />
-            <Button
-                title="Login"
-                onPress={handleLogin}
-            />
-            <Text style={styles.error}>{error}</Text>
+            <View style={styles.form}>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Nome"
+                    value={student.name}
+                    onChangeText={
+                        (text) => setStudent({ ...student, name: text })
 
+                    }
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder="RA"
+                    value={student.ra}
+                    onChangeText={(text) => setStudent({ ...student, ra: text })}
+                />
+
+                <TextInput
+                    style={styles.input}
+                    placeholder="Email"
+                    onChangeText={text => setStudent({ ...student, email: text })}
+                    value={student.email}
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Password"
+                    onChangeText={text => setStudent({ ...student, password: text })}
+                    value={student.password}
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Confirm Password"
+                    onChangeText={text => setStudent({ ...student, confirmPassword: text })}
+                    value={student.confirmPassword}
+                />
+                <Button
+                    title="Login"
+                    onPress={() => { 
+                        console.log(student);
+                    }}
+                />
+            </View>
+            <Text style={styles.error}>{error}</Text>
+            {
+                //display error message if there is one
+                error ? <Text style={styles.error}>{error}</Text> : null
+
+            }
         </View>
     );
 }
@@ -89,6 +110,11 @@ const styles = StyleSheet.create({
         marginBottom: 16,
         padding: 8,
     },
+    form: {
+        width: "100%",
+        alignItems: "center",
+    },
+
     error: {
         color: "red",
     },

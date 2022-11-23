@@ -4,8 +4,8 @@ export declare global {
             screenA: undefined;
             screenB: undefined;
             spotDetail: any;
-            home: undefined;
-            vagas : undefined;
+            Home: undefined;
+            Vagas : undefined;
         }
     }
 }
